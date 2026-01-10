@@ -1,0 +1,219 @@
+[
+    {
+        "id": 1,
+        "title": "Peluches de animales",
+        "price": 9560,
+        "category": "decoracion",
+        "img": "/imgs/peluches_de_animales.jpeg"
+    },
+    {
+        "id": 2,
+        "title": "Flores rojas en maceta",
+        "price": 60,
+        "category": "decoracion",
+        "img": "/imgs/flores_rojas_en_maceta.jpeg"
+    },
+    {
+        "id": 3,
+        "title": "Bicicleta rosa",
+        "price": 1100,
+        "category": "decoracion",
+        "img": "/imgs/bicicleta_rosa.jpeg"
+    },
+    {
+        "id": 4,
+        "title": "Gallina con telescopio",
+        "price": 2600,
+        "category": "decoracion",
+        "img": "/imgs/gallina_con_telescopio.jpeg"
+    },
+    {
+        "id": 5,
+        "title": "Tractor rojo",
+        "price": 7050,
+        "category": "decoracion",
+        "img": "/imgs/tractor_rojo.jpeg"
+    },
+    {
+        "id": 6,
+        "title": "Laguna con flores de loto",
+        "price": 4020,
+        "category": "decoracion",
+        "img": "/imgs/laguna_con_flores_de_loto.jpeg"
+    },
+    {
+        "id": 7,
+        "title": "Perno",
+        "price": 300,
+        "category": "granero",
+        "img": "/imgs/perno.jpeg"
+    },
+    {
+        "id": 8,
+        "title": "Cinta",
+        "price": 200,
+        "category": "granero",
+        "img": "/imgs/cinta.jpeg"
+    },
+    {
+        "id": 9,
+        "title": "Madera simple",
+        "price": 1000,
+        "category": "granero",
+        "img": "/imgs/madera_simple.jpeg"
+    },
+    {
+        "id": 10,
+        "title": "Clavos",
+        "price": 180,
+        "category": "silo",
+        "img": "/imgs/clavos.jpeg"
+    },
+    {
+        "id": 11,
+        "title": "Tornillo",
+        "price": 250,
+        "category": "silo",
+        "img": "/imgs/tornillo.jpeg"
+    },
+    {
+        "id": 12,
+        "title": "Maderas dobles",
+        "price": 2000,
+        "category": "silo",
+        "img": "/imgs/maderas_dobles.jpeg"
+    },
+    {
+        "id": 13,
+        "title": "Escritura",
+        "price": 12000,
+        "category": "otros",
+        "img": "/imgs/escritura.jpeg"
+    },
+    {
+        "id": 14,
+        "title": "Maza",
+        "price": 1500,
+        "category": "otros",
+        "img": "/imgs/maza.jpeg"
+    },
+    {
+        "id": 15,
+        "title": "Estaca",
+        "price": 1000,
+        "category": "otros",
+        "img": "/imgs/estaca.jpeg"
+    },
+    {
+        "id": 16,
+        "title": "Llaves",
+        "price": 2000,
+        "category": "otros",
+        "img": "/imgs/llaves.jpeg"
+    },
+    {
+        "id": 17,
+        "title": "Diamantes",
+        "price": 170,
+        "category": "2500",
+        "img": "/imgs/diamantes.jpeg"
+    },
+    {
+        "id": 18,
+        "title": "Bolsito de diamantes",
+        "price": 4000,
+        "category": "otros",
+        "img": "/imgs/bolsito_de_diamantes.jpeg"
+    },
+    {
+        "id": 19,
+        "title": "Costal de diamantes",
+        "price": 10000,
+        "category": "otros",
+        "img": "/imgs/costal_de_diamantes.jpeg"
+    },
+    {
+        "id": 20,
+        "title": "Caja de diamantes",
+        "price": 15000,
+        "category": "otros",
+        "img": "/imgs/caja_de_diamantes.jpeg"
+    },
+    {
+        "id": 21,
+        "title": "Cajón de diamantes",
+        "price": 30000,
+        "category": "otros",
+        "img": "/imgs/cajon_de_diamantes.jpeg"
+    },
+    {
+        "id": 22,
+        "title": "Baúl de diamantes",
+        "price": 40000,
+        "category": "otros",
+        "img": "/imgs/baul_de_diamantes.jpeg"
+    },
+    {
+        "id": 23,
+        "title": "Pollitos",
+        "price": 3000,
+        "category": "otros",
+        "img": "/imgs/pollitos.jpeg"
+    },
+    {
+        "id": 24,
+        "title": "Pase de la granja",
+        "price": 6000,
+        "category": "otros",
+        "img": "/imgs/pase_de_la_granja.jpeg"
+    },
+    {
+        "id": 25,
+        "title": "Potenciador sorpresa",
+        "price": 800,
+        "category": "otros",
+        "img": "/imgs/potenciador_sorpresa.jpeg"
+    },
+    {
+        "id": 26,
+        "title": "Mariquita con flor",
+        "price": 1200,
+        "category": "decoracion",
+        "img": "/imgs/mariquita_con_flor.jpeg"
+    },
+    {
+        "id": 27,
+        "title": "Chancho barman",
+        "price": 9000,
+        "category": "decoracion",
+        "img": "/imgs/chancho_barman.jpeg"
+    },
+    {
+        "id": 28,
+        "title": "Bonsái de cerezo",
+        "price": 5500,
+        "category": "decoracion",
+        "img": "/imgs/bonsai_de_cerezo.jpeg"
+    },
+    {
+        "id": 29,
+        "title": "Árbol amarillo",
+        "price": 2600,
+        "category": "decoracion",
+        "img": "/imgs/arbol_amarillo.jpeg"
+    },
+    {
+        "id": 30,
+        "title": "Fuente de agua",
+        "price": 4100,
+        "category": "decoracion",
+        "img": "/imgs/fuente_de_agua.jpeg"
+    },
+    {
+        "id": 31,
+        "title": "Chanchito cocinero de galletitas",
+        "price": 16500,
+        "category": "decoracion",
+        "img": "/imgs/chanchito_cocinero_de_galletitas.jpeg"
+    }
+]

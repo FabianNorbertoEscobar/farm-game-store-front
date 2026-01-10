@@ -31,3 +31,68 @@ a {
 a:hover {
   color: #1b5e20;
 }
+/* Scrollbar personalizado */
+::-webkit-scrollbar {
+  width: 14px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f2f2f2;
+  border-radius: 10px;
+  margin: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, #ffdf29 0%, #f1c40f 100%);
+  border-radius: 10px;
+  border: 2px solid #f2f2f2;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(180deg, #2bbd2b 0%, #229722 100%);
+  box-shadow: 0 3px 8px rgba(43,189,43,0.3);
+}
+
+@keyframes blink-added {
+  from { opacity: 1; }
+  to { opacity: 0.4; }
+}
+
+@keyframes card-glow {
+  0%, 100% {
+    box-shadow: 0 8px 20px rgba(0,0,0,0.12);
+    border-color: rgba(0,0,0,0.06);
+  }
+  50% {
+    box-shadow: 0 8px 30px rgba(255,223,41,0.6), 0 0 20px rgba(255,223,41,0.4);
+    border-color: rgba(255,223,41,0.8);
+  }
+}
+
+/* Pulsos sutiles para CTAs con movimiento */
+@keyframes pulse-button {
+  0%, 100% {
+    box-shadow: 0 8px 16px rgba(241,196,15,0.35);
+    filter: brightness(1);
+    transform: translateY(0) scale(1);
+  }
+  50% {
+    box-shadow: 0 12px 22px rgba(241,196,15,0.45);
+    filter: brightness(1.05);
+    transform: translateY(-2px) scale(1.02);
+  }
+}
+
+@keyframes pulse-button-primary {
+  0%, 100% {
+    box-shadow: 0 8px 16px rgba(43,189,43,0.35);
+    filter: brightness(1);
+    transform: translateY(0) scale(1);
+  }
+  50% {
+    box-shadow: 0 12px 24px rgba(34,151,34,0.50);
+    filter: brightness(1.06);
+    transform: translateY(-2px) scale(1.03);
+  }
+}
