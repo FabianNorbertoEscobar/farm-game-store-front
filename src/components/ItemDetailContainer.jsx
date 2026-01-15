@@ -1,10 +1,22 @@
-import { useParams, Link } from 'react-router-dom'
+import { useParams, Link, useNavigate } from 'react-router-dom'
 import { useEffect, useState, useRef } from 'react'
 import ItemCount from './ItemCount.jsx'
 import { getItemData } from '../data/mockService.js'
+import { useCartContext } from '../context/cartContext.jsx'
+import { useUserContext } from '../context/userContext.jsx'
+import { useNotification } from '../context/notificationContext.jsx'
+import PurchaseModal from './PurchaseModal.jsx'
 
 function ItemDetailContainer() {
     const { itemID } = useParams()
+    const navigate = useNavigate()
+    const { showNotification } = useNotification()
+    const { addItemToCart, calculateTotalPrice } = useCartContext()
+    const { user, availableCoins, spendCoins } = useUserContext()
+
+    // Calcular monedas disponibles restando el total del carrito
+    const cartTotal = calculateTotalPrice()
+    const coinsAvailable = availableCoins - cartTotal
     const [product, setProduct] = useState(null)
     const [loading, setLoading] = useState(true)
     const [error, setError] = useState(null)
@@ -12,12 +24,24 @@ function ItemDetailContainer() {
     const [quantity, setQuantity] = useState(1)
     const [resetSignal, setResetSignal] = useState(0)
     const [addedMessage, setAddedMessage] = useState(null)
+    const [showPurchaseModal, setShowPurchaseModal] = useState(false)
+    const [purchaseQuantity, setPurchaseQuantity] = useState(1)
+    const [isMobile, setIsMobile] = useState(window.innerWidth <= 640)
     const addedTimeoutRef = useRef(null)
 
     const formatCategoryLabel = (cat) => {
         const map = { decoracion: 'Decoración', granero: 'Granero', silo: 'Silo', otros: 'Otros' }
         return map[cat] ?? (cat.charAt(0).toUpperCase() + cat.slice(1))
     }
+
+    useEffect(() => {
+        const handleResize = () => {
+            setIsMobile(window.innerWidth <= 640)
+        }
+
+        window.addEventListener('resize', handleResize)
+        return () => window.removeEventListener('resize', handleResize)
+    }, [])
 
     useEffect(() => {
         let active = true
@@ -68,7 +92,8 @@ function ItemDetailContainer() {
             position: 'relative',
             borderRadius: '14px',
             overflow: 'hidden',
-            background: '#f6f6f6'
+            background: '#f6f6f6',
+            aspectRatio: '1 / 1'
         },
         image: {
             width: '100%',
@@ -138,10 +163,30 @@ function ItemDetailContainer() {
             color: '#1f7a1f',
             fontWeight: 800,
             animation: 'blink-added 0.7s ease-in-out infinite alternate'
+        },
+        '@media (max-width: 768px)': {
+            card: {
+                gridTemplateColumns: '1fr',
+                gap: '16px'
+            },
+            imageWrapper: {
+                maxWidth: '300px',
+                margin: '0 auto'
+            }
         }
     }
 
     const handleAddToCart = (count) => {
+        const totalCost = product.price * count
+
+        if (totalCost > coinsAvailable) {
+            setAddedMessage(`❌ No tienes suficientes monedas disponibles. Te faltan 🪙 ${totalCost - coinsAvailable}`)
+            if (addedTimeoutRef.current) clearTimeout(addedTimeoutRef.current)
+            addedTimeoutRef.current = setTimeout(() => setAddedMessage(null), 3200)
+            return
+        }
+
+        addItemToCart(product, count)
         setQuantity(1)
         setResetSignal((s) => s + 1)
         setAddedMessage(`Se agregó ${count} al carrito`)
@@ -150,11 +195,28 @@ function ItemDetailContainer() {
     }
 
     const handleBuyNow = (count) => {
+        const totalCost = product.price * count
+
+        if (totalCost > availableCoins) {
+            setAddedMessage(`❌ No tienes suficientes monedas disponibles. Te faltan 🪙 ${totalCost - availableCoins}`)
+            if (addedTimeoutRef.current) clearTimeout(addedTimeoutRef.current)
+            addedTimeoutRef.current = setTimeout(() => setAddedMessage(null), 3200)
+            return
+        }
+
+        setPurchaseQuantity(count)
+        setShowPurchaseModal(true)
+    }
+
+    const handleDirectPurchase = () => {
+        const totalCost = product.price * purchaseQuantity
+        spendCoins(totalCost)
         setQuantity(1)
         setResetSignal((s) => s + 1)
-        setAddedMessage(`Compra exitosa de ${count}`)
-        if (addedTimeoutRef.current) clearTimeout(addedTimeoutRef.current)
-        addedTimeoutRef.current = setTimeout(() => setAddedMessage(null), 3200)
+        navigate('/')
+        setTimeout(() => {
+            showNotification(`¡Compra exitosa! 🎉 Has adquirido ${purchaseQuantity} ${product.title}. Ingresa al juego para ver tu compra`, 5000)
+        }, 100)
     }
 
     useEffect(() => () => {
@@ -185,8 +247,20 @@ function ItemDetailContainer() {
     return (
         <section style={styles.section}>
             <h1 style={styles.heading}>Detalles del producto</h1>
-            <div style={styles.card}>
-                <div style={styles.imageWrapper}>
+            <div style={{
+                ...styles.card,
+                ...(isMobile && {
+                    gridTemplateColumns: '1fr',
+                    gap: '16px'
+                })
+            }}>
+                <div style={{
+                    ...styles.imageWrapper,
+                    ...(isMobile && {
+                        maxWidth: '180px',
+                        margin: '0 auto'
+                    })
+                }}>
                     <img style={styles.image} src={product.img} alt={product.title} />
                     {product.category && <span style={styles.badge}>{formatCategoryLabel(product.category)}</span>}
                 </div>
@@ -203,7 +277,7 @@ function ItemDetailContainer() {
                         onAdd={handleAddToCart}
                         onBuy={handleBuyNow}
                         unitPrice={product.price}
-                        availableCoins={12526}
+                        availableCoins={coinsAvailable}
                         resetSignal={resetSignal}
                     />
                     {addedMessage && <div style={styles.added}>{addedMessage}</div>}
@@ -230,6 +304,16 @@ function ItemDetailContainer() {
                     </div>
                 </div>
             </div>
+
+            {/* Purchase Modal */}
+            <PurchaseModal
+                isOpen={showPurchaseModal}
+                onClose={() => setShowPurchaseModal(false)}
+                onConfirm={handleDirectPurchase}
+                totalPrice={product.price * purchaseQuantity}
+                availableCoins={user.coins}
+                itemCount={purchaseQuantity}
+            />
         </section>
     )
 }

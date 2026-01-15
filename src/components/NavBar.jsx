@@ -1,7 +1,21 @@
-import { NavLink } from 'react-router-dom'
+import { NavLink, Link } from 'react-router-dom'
+import { useState, useEffect } from 'react'
 import CartWidget from './CartWidget.jsx'
+import { useUserContext } from '../context/userContext.jsx'
 
 export default function NavBar() {
+    const { user, availableCoins } = useUserContext()
+    const [showAvatarTooltip, setShowAvatarTooltip] = useState(false)
+    const [isMobile, setIsMobile] = useState(window.innerWidth <= 768)
+
+    useEffect(() => {
+        const handleResize = () => {
+            setIsMobile(window.innerWidth <= 768)
+        }
+
+        window.addEventListener('resize', handleResize)
+        return () => window.removeEventListener('resize', handleResize)
+    }, [])
 
     const categories = ["decoracion", "granero", "silo", "otros"]
 
@@ -17,16 +31,31 @@ export default function NavBar() {
             padding: '16px 20px',
             display: 'flex',
             alignItems: 'center',
-            justifyContent: 'space-between',
+            justifyContent: isMobile ? 'center' : 'space-between',
             boxShadow: '0 2px 8px rgba(0,0,0,0.2)',
             flexWrap: 'wrap',
             gap: '12px'
         },
         titleContainer: {
             display: 'flex',
+            flexDirection: 'row',
+            alignItems: 'center',
+            gap: '12px',
+            width: isMobile ? '100%' : 'auto',
+            justifyContent: isMobile ? 'center' : 'flex-start'
+        },
+        titleContent: {
+            display: 'flex',
             flexDirection: 'column',
             alignItems: 'flex-start',
             gap: '4px'
+        },
+        logo: {
+            width: '65px',
+            height: '65px',
+            borderRadius: '50%',
+            objectFit: 'cover',
+            boxShadow: '0 2px 8px rgba(0,0,0,0.15)'
         },
         title: {
             margin: 0,
@@ -62,7 +91,9 @@ export default function NavBar() {
         coinsContainer: {
             display: 'flex',
             alignItems: 'center',
-            gap: '12px'
+            gap: '12px',
+            width: isMobile ? '100%' : 'auto',
+            justifyContent: isMobile ? 'center' : 'flex-start'
         },
         coinsBadge: {
             display: 'flex',
@@ -76,6 +107,35 @@ export default function NavBar() {
             fontSize: '16px',
             boxShadow: '0 4px 10px rgba(0,0,0,0.15)',
             fontFamily: 'Luckiest Guy, "Segoe UI Emoji", "Noto Color Emoji", sans-serif'
+        },
+        avatar: {
+            width: '48px',
+            height: '48px',
+            borderRadius: '50%',
+            objectFit: 'cover',
+            border: '3px solid #fff',
+            boxShadow: '0 4px 10px rgba(0,0,0,0.2)',
+            cursor: 'pointer',
+            transition: 'transform 0.2s ease'
+        },
+        avatarContainer: {
+            position: 'relative'
+        },
+        avatarTooltip: {
+            position: 'absolute',
+            bottom: '-35px',
+            left: '50%',
+            transform: 'translateX(-50%)',
+            backgroundColor: '#222',
+            color: '#fff',
+            padding: '6px 12px',
+            borderRadius: '8px',
+            fontSize: '14px',
+            whiteSpace: 'nowrap',
+            zIndex: 99999,
+            boxShadow: '0 4px 12px rgba(0,0,0,0.3)',
+            fontFamily: 'Luckiest Guy, sans-serif',
+            pointerEvents: 'none'
         }
     }
 
@@ -93,16 +153,23 @@ export default function NavBar() {
             <NavLink to="/" style={{ textDecoration: 'none' }}>
                 {({ isActive }) => (
                     <div style={styles.titleContainer}>
-                        <h2
-                            style={{ ...styles.title, color: isActive ? activeColor : baseColor }}
-                            onMouseEnter={(e) => { e.target.style.color = hoverColor }}
-                            onMouseLeave={(e) => { e.target.style.color = isActive ? activeColor : baseColor }}
-                        >
-                            Wonder Farm
-                        </h2>
-                        <span style={{ ...styles.emojis, color: isActive ? activeColor : baseColor }}>
-                            🐔 🐄 🐖 🐑 🐐
-                        </span>
+                        <img
+                            src="/wonder_farm_redondo.png"
+                            alt="Wonder Farm Logo"
+                            style={styles.logo}
+                        />
+                        <div style={styles.titleContent}>
+                            <h2
+                                style={{ ...styles.title, color: isActive ? activeColor : baseColor }}
+                                onMouseEnter={(e) => { e.target.style.color = hoverColor }}
+                                onMouseLeave={(e) => { e.target.style.color = isActive ? activeColor : baseColor }}
+                            >
+                                Wonder Farm
+                            </h2>
+                            <span style={{ ...styles.emojis, color: isActive ? activeColor : baseColor }}>
+                                🐔 🐄 🐖 🐑 🐐
+                            </span>
+                        </div>
                     </div>
                 )}
             </NavLink>
@@ -126,11 +193,31 @@ export default function NavBar() {
             </ul>
 
             <div style={styles.coinsContainer}>
+                {user?.avatar && (
+                    <div
+                        style={styles.avatarContainer}
+                        onMouseEnter={() => setShowAvatarTooltip(true)}
+                        onMouseLeave={() => setShowAvatarTooltip(false)}
+                    >
+                        <img
+                            src={user.avatar}
+                            alt={`${user.firstName} ${user.lastName}`}
+                            style={styles.avatar}
+                        />
+                        {showAvatarTooltip && (
+                            <div style={styles.avatarTooltip}>
+                                {user.firstName} {user.lastName}
+                            </div>
+                        )}
+                    </div>
+                )}
                 <div style={styles.coinsBadge}>
                     <span>🪙</span>
-                    <span>12526</span>
+                    <span>{availableCoins}</span>
                 </div>
-                <CartWidget />
+                <Link to="/cart" style={{ textDecoration: 'none' }}>
+                    <CartWidget />
+                </Link>
             </div>
         </nav>
     )
