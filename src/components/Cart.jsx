@@ -5,6 +5,7 @@ import { useNotification } from '../context/notificationContext.jsx'
 import { useState } from 'react'
 import ConfirmModal from './ConfirmModal.jsx'
 import PurchaseModal from './PurchaseModal.jsx'
+import { createBuyOrder } from '../data/dataService.js'
 
 function Cart() {
     const navigate = useNavigate()
@@ -18,7 +19,7 @@ function Cart() {
         countItemsInCart
     } = useCartContext()
 
-    const { availableCoins, spendCoins } = useUserContext()
+    const { user, availableCoins, spendCoins } = useUserContext()
     const [hoverItem, setHoverItem] = useState(null)
     const [showTooltip, setShowTooltip] = useState(null)
     const [modalConfig, setModalConfig] = useState({ isOpen: false, title: '', message: '', onConfirm: () => { } })
@@ -293,15 +294,45 @@ function Cart() {
         setModalConfig({ isOpen: false, title: '', message: '', onConfirm: () => { } })
     }
 
-    const handlePurchase = () => {
+    const handlePurchase = async () => {
         const total = calculateTotalPrice()
-        spendCoins(total)
-        clearCart()
-        navigate('/')
-        // Mostrar snackbar después de navegar
-        setTimeout(() => {
-            showNotification('¡Compra realizada con éxito! 🎉 Ingresa al juego para ver tus productos comprados', 5000)
-        }, 100)
+
+        // Crear objeto de orden
+        const buyOrderData = {
+            buyer: {
+                name: `${user.firstName} ${user.lastName}`,
+                farmAlias: user.farmAlias,
+                userId: user.id
+            },
+            items: cart.map(item => ({
+                id: item.id,
+                title: item.title,
+                category: item.category,
+                price: item.price,
+                quantity: item.count,
+                img: item.img
+            })),
+            total: total
+        }
+
+        try {
+            // Guardar orden en base de datos
+            const orderId = await createBuyOrder(buyOrderData)
+            console.log('Orden creada:', orderId)
+
+            // Procesar compra
+            spendCoins(total)
+            clearCart()
+            navigate('/')
+
+            // Mostrar snackbar después de navegar
+            setTimeout(() => {
+                showNotification('¡Compra realizada con éxito! 🎉 Ingresa al juego para ver tus productos comprados', 5000)
+            }, 100)
+        } catch (error) {
+            console.error('Error al crear orden:', error)
+            showNotification('❌ Error al procesar la compra. Inténtalo de nuevo', 3000)
+        }
     }
 
     const canIncreaseQuantity = (item) => {

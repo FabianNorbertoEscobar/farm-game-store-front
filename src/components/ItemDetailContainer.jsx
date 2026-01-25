@@ -1,7 +1,7 @@
 import { useParams, Link, useNavigate } from 'react-router-dom'
 import { useEffect, useState, useRef } from 'react'
 import ItemCount from './ItemCount.jsx'
-import { getItemData } from '../data/mockService.js'
+import { getItemData, createBuyOrder } from '../data/dataService.js'
 import { useCartContext } from '../context/cartContext.jsx'
 import { useUserContext } from '../context/userContext.jsx'
 import { useNotification } from '../context/notificationContext.jsx'
@@ -208,15 +208,45 @@ function ItemDetailContainer() {
         setShowPurchaseModal(true)
     }
 
-    const handleDirectPurchase = () => {
+    const handleDirectPurchase = async () => {
         const totalCost = product.price * purchaseQuantity
-        spendCoins(totalCost)
-        setQuantity(1)
-        setResetSignal((s) => s + 1)
-        navigate('/')
-        setTimeout(() => {
-            showNotification(`¡Compra exitosa! 🎉 Has adquirido ${purchaseQuantity} ${product.title}. Ingresa al juego para ver tu compra`, 5000)
-        }, 100)
+
+        // Crear objeto de orden
+        const buyOrderData = {
+            buyer: {
+                name: `${user.firstName} ${user.lastName}`,
+                farmAlias: user.farmAlias,
+                userId: user.id
+            },
+            items: [{
+                id: product.id,
+                title: product.title,
+                category: product.category,
+                price: product.price,
+                quantity: purchaseQuantity,
+                img: product.img
+            }],
+            total: totalCost
+        }
+
+        try {
+            // Guardar orden en base de datos
+            const orderId = await createBuyOrder(buyOrderData)
+            console.log('Orden creada:', orderId)
+
+            // Procesar compra
+            spendCoins(totalCost)
+            setQuantity(1)
+            setResetSignal((s) => s + 1)
+            navigate('/')
+
+            setTimeout(() => {
+                showNotification(`¡Compra exitosa! 🎉 Has adquirido ${purchaseQuantity} ${product.title}. Ingresa al juego para ver tu compra`, 5000)
+            }, 100)
+        } catch (error) {
+            console.error('Error al crear orden:', error)
+            showNotification('❌ Error al procesar la compra. Inténtalo de nuevo', 3000)
+        }
     }
 
     useEffect(() => () => {

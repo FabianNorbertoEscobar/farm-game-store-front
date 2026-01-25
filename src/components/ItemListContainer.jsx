@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react"
 import { useParams } from "react-router-dom"
 import Item from "./Item.jsx"
-import getData, { getCategoryData } from "../data/mockService.js"
+import getData, { getCategoryData } from "../data/dataService.js"
 
 export default function ItemListContainer() {
     const [products, setProducts] = useState([])
