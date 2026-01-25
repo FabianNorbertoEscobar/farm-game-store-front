@@ -4,6 +4,7 @@ import NavBar from './components/NavBar.jsx'
 import ItemListContainer from './components/ItemListContainer.jsx'
 import ItemDetailContainer from './components/ItemDetailContainer.jsx'
 import Cart from './components/Cart.jsx'
+import OrderHistory from './components/OrderHistory.jsx'
 import { CartProvider } from './context/cartContext.jsx'
 import { UserProvider } from './context/userContext.jsx'
 import { NotificationProvider } from './context/notificationContext.jsx'
@@ -22,6 +23,7 @@ function App() {
               <Route path="/category/:categoryID" element={<ItemListContainer />} />
               <Route path="/product/:itemID" element={<ItemDetailContainer />} />
               <Route path="/cart" element={<Cart />} />
+              <Route path="/orders" element={<OrderHistory />} />
 
               <Route
                 path="*"

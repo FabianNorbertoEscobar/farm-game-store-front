@@ -8,6 +8,8 @@ import {
     getFirestore,
     query,
     where,
+    // eslint-disable-next-line no-unused-vars
+    orderBy,
     Timestamp
 } from 'firebase/firestore';
 import products from "./products";
@@ -163,6 +165,32 @@ export async function createBuyOrder(buyOrderData) {
     } catch (error) {
         console.error('Error creating order:', error);
         throw new Error('No se pudo crear la orden');
+    }
+}
+
+/**
+ * Obtener todas las órdenes del usuario
+ * @param {number} userId - ID del usuario
+ * @returns {Promise<Array>} Array de órdenes del usuario
+ */
+export async function getOrders(userId) {
+    try {
+        const collectionRef = collection(db, COLLECTIONS.ORDERS);
+        const ordersQuery = query(
+            collectionRef,
+            where("buyer.userId", "==", userId)
+        );
+        const ordersSnapshot = await getDocs(ordersQuery);
+
+        const orders = ordersSnapshot.docs.map(mapDocToObject);
+        return orders.sort((a, b) => {
+            const dateA = a.createdAt?.toDate?.() || a.createdAt;
+            const dateB = b.createdAt?.toDate?.() || b.createdAt;
+            return new Date(dateB) - new Date(dateA);
+        });
+    } catch (error) {
+        console.error('Error fetching orders:', error);
+        throw new Error('No se pudieron cargar las órdenes');
     }
 }
 

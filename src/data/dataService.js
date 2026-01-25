@@ -31,7 +31,8 @@ export const {
     getCategoryData,
     getCategories,
     searchByTitle,
-    createBuyOrder
+    createBuyOrder,
+    getOrders
 } = activeService;
 
 // Exportación por defecto

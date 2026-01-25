@@ -81,5 +81,73 @@ export async function createBuyOrder(buyOrderData) {
     return orderId
 }
 
+/**
+ * Obtener todas las órdenes del usuario (simulación)
+ * @param {number} userId - ID del usuario
+ * @returns {Promise<Array>} Array de órdenes del usuario
+ */
+export async function getOrders(userId) {
+    await delay(600)
+    // Simular órdenes de ejemplo usando productos reales
+    return [
+        {
+            id: 'ORDER-1737820800-abc123',
+            buyer: {
+                name: 'Fabián Escobar',
+                farmAlias: 'FNEFarm',
+                userId: userId
+            },
+            items: [
+                {
+                    id: products[0].id,
+                    title: products[0].title,
+                    category: products[0].category,
+                    price: products[0].price,
+                    quantity: 1,
+                    img: products[0].img
+                },
+                {
+                    id: products[2].id,
+                    title: products[2].title,
+                    category: products[2].category,
+                    price: products[2].price,
+                    quantity: 2,
+                    img: products[2].img
+                }
+            ],
+            total: products[0].price + (products[2].price * 2),
+            createdAt: new Date('2026-01-20T10:30:00')
+        },
+        {
+            id: 'ORDER-1737734400-def456',
+            buyer: {
+                name: 'Fabián Escobar',
+                farmAlias: 'FNEFarm',
+                userId: userId
+            },
+            items: [
+                {
+                    id: products[3].id,
+                    title: products[3].title,
+                    category: products[3].category,
+                    price: products[3].price,
+                    quantity: 1,
+                    img: products[3].img
+                },
+                {
+                    id: products[1].id,
+                    title: products[1].title,
+                    category: products[1].category,
+                    price: products[1].price,
+                    quantity: 3,
+                    img: products[1].img
+                }
+            ],
+            total: products[3].price + (products[1].price * 3),
+            createdAt: new Date('2026-01-19T15:45:00')
+        }
+    ]
+}
+
 // Exportación por defecto
 export default getData;
