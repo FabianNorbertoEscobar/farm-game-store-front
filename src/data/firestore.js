@@ -16,12 +16,12 @@ import products from "./products";
 
 // Configuración de Firebase
 const firebaseConfig = {
-    apiKey: "AIzaSyCCXNbZiZOl71KEO-fuHHB56U_usG5jx3Q",
-    authDomain: "farm-game-store.firebaseapp.com",
-    projectId: "farm-game-store",
-    storageBucket: "farm-game-store.firebasestorage.app",
-    messagingSenderId: "291943454566",
-    appId: "1:291943454566:web:a159297f7876a62b13daa7"
+    apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
+    authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,
+    projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID,
+    storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET,
+    messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID,
+    appId: import.meta.env.VITE_FIREBASE_APP_ID
 };
 
 // Inicializar Firebase

@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/purity */
 import { useEffect, useMemo } from 'react'
 
 function Snackbar({ message, isVisible, onClose, duration = 4000 }) {

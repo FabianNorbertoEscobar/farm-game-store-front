@@ -2,8 +2,9 @@
 import { createContext, useState, useContext } from "react";
 
 /**
- * UserContext - Context para manejar la información del usuario
- * Proporciona datos del usuario logueado como monedas disponibles
+ * UserContext - Contexto para manejar la información del usuario.
+ * Proporciona datos del usuario logueado y helpers para actualizar el saldo
+ * de monedas dentro de la aplicación.
  */
 const userContext = createContext({
     user: null,
@@ -14,7 +15,7 @@ const userContext = createContext({
 const DefaultUserProvider = userContext.Provider;
 
 export function UserProvider({ children }) {
-    // Usuario hardcodeado con sus monedas
+    // Usuario hardcodeado con sus monedas (placeholder para demo)
     const [user, setUser] = useState({
         id: 1,
         firstName: "Fabián",
@@ -25,8 +26,8 @@ export function UserProvider({ children }) {
     });
 
     /**
-     * Actualiza las monedas del usuario
-     * @param {number} newAmount - Nueva cantidad de monedas
+     * Actualiza el saldo de monedas del usuario.
+     * @param {number} newAmount - Nueva cantidad de monedas.
      */
     const updateCoins = (newAmount) => {
         setUser(prevUser => ({
@@ -36,8 +37,8 @@ export function UserProvider({ children }) {
     };
 
     /**
-     * Resta monedas del usuario
-     * @param {number} amount - Cantidad a restar
+     * Resta monedas del usuario sin permitir valores negativos.
+     * @param {number} amount - Cantidad a restar.
      */
     const spendCoins = (amount) => {
         setUser(prevUser => ({
@@ -61,8 +62,8 @@ export function UserProvider({ children }) {
 }
 
 /**
- * Hook personalizado para usar el UserContext
- * @returns {Object} - Información del usuario y funciones relacionadas
+ * Hook personalizado para usar `UserContext`.
+ * @returns {Object} - Información del usuario y funciones relacionadas.
  */
 export function useUserContext() {
     const context = useContext(userContext);
