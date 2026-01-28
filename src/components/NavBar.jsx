@@ -181,12 +181,17 @@ export default function NavBar() {
         userMenu: {
             position: 'absolute',
             top: '58px',
-            right: '0',
+            right: isMobile ? 'auto' : '0',
+            left: isMobile ? '50%' : 'auto',
+            transform: isMobile ? 'translateX(-50%)' : 'none',
             backgroundColor: '#fff',
             borderRadius: '12px',
             boxShadow: '0 8px 24px rgba(0,0,0,0.15)',
             border: '2px solid #ffdf29',
             minWidth: '200px',
+            width: 'auto',
+            maxWidth: isMobile ? '90vw' : 'none',
+            boxSizing: 'border-box',
             overflow: 'hidden',
             zIndex: 99999,
             animation: 'slideDown 0.2s ease'
@@ -231,11 +236,25 @@ export default function NavBar() {
                     @keyframes slideDown {
                         from {
                             opacity: 0;
-                            transform: translateY(-10px);
                         }
                         to {
                             opacity: 1;
-                            transform: translateY(0);
+                        }
+                    }
+
+                    @media (max-width: 480px) {
+                        .nav-links {
+                            width: 100%;
+                            display: grid !important;
+                            grid-template-columns: repeat(2, minmax(0, 1fr));
+                            justify-items: center;
+                            gap: 8px 12px;
+                        }
+
+                        .nav-links li {
+                            width: 100%;
+                            display: flex;
+                            justify-content: center;
                         }
                     }
                 `}
@@ -265,7 +284,7 @@ export default function NavBar() {
                     )}
                 </NavLink>
 
-                <ul style={styles.links}>
+                <ul className="nav-links" style={styles.links}>
                     {categories.map((cat) => (
                         <li key={cat}>
                             <NavLink to={`/category/${cat}`} style={({ isActive }) => navLinkStyle(isActive)}>

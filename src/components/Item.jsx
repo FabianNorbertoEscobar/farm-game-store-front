@@ -23,6 +23,7 @@ export default function Item({ title, img, price, id, category }) {
             boxShadow: '0 8px 20px rgba(0,0,0,0.12)',
             padding: '16px',
             width: '100%',
+            boxSizing: 'border-box',
             border: '1px solid rgba(0,0,0,0.06)',
             animation: `card-glow 6s ease-in-out infinite`,
             animationDelay: animationDelay,
@@ -58,7 +59,8 @@ export default function Item({ title, img, price, id, category }) {
         content: {
             display: 'flex',
             flexDirection: 'column',
-            justifyContent: 'space-between'
+            justifyContent: 'space-between',
+            minWidth: 0
         },
         title: {
             margin: '0 0 8px 0',
@@ -94,6 +96,7 @@ export default function Item({ title, img, price, id, category }) {
             boxShadow: '0 6px 12px rgba(255,223,41,0.35)',
             transition: 'transform .1s ease, box-shadow .2s ease, background .2s ease',
             width: 'fit-content',
+            maxWidth: '100%',
             transform: 'translateY(0)'
         }
     }
@@ -108,20 +111,21 @@ export default function Item({ title, img, price, id, category }) {
         : styles.button
 
     return (
-        <div style={styles.card} title={title}>
+        <div className="item-card" style={styles.card} title={title}>
             <div style={styles.imageWrapper}>
                 <img style={styles.image} src={img} alt={title} />
                 {category && (
                     <span style={styles.badge}>{categoryDisplay}</span>
                 )}
             </div>
-            <div style={styles.content}>
-                <h3 style={styles.title}>{title}</h3>
-                <p style={styles.price}>
+            <div className="item-card-content" style={styles.content}>
+                <h3 className="item-card-title" style={styles.title}>{title}</h3>
+                <p className="item-card-price" style={styles.price}>
                     <span style={styles.coin}>🪙</span>
                     {price}
                 </p>
                 <Link
+                    className="item-card-button"
                     style={buttonStyle}
                     to={`/product/${id}`}
                     onMouseEnter={() => setHover(true)}

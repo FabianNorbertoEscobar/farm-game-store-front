@@ -143,6 +143,47 @@ export default function ItemListContainer() {
 
     return (
         <section style={styles.section}>
+            <style>
+                {`
+                    @media (max-width: 420px) {
+                        .item-card {
+                            grid-template-columns: 1fr;
+                            padding: 14px;
+                        }
+
+                        .item-card-content {
+                            gap: 8px;
+                        }
+
+                        .item-card-title {
+                            font-size: 18px;
+                        }
+
+                        .item-card-price {
+                            font-size: 20px;
+                        }
+
+                        .item-card-price span {
+                            font-size: 20px;
+                        }
+
+                        .item-card-button {
+                            width: 100%;
+                            text-align: center;
+                        }
+                    }
+
+                    .loading-animals {
+                        white-space: nowrap;
+                    }
+
+                    @media (max-width: 360px) {
+                        .loading-animals {
+                            display: block;
+                        }
+                    }
+                `}
+            </style>
             {!categoryID && (
                 <div style={styles.welcome}>
                     <span style={styles.welcomeTitle}>¡Bienvenidos a la tienda de Wonder Farm!</span>
@@ -164,7 +205,12 @@ export default function ItemListContainer() {
                 {categoryID && <span style={styles.tag}>{formatCategoryLabel(categoryID)}</span>}
             </div>
 
-            {loading && <div style={styles.message}>Cargando productos... 🐔 🐄 🐖 🐑 🐐</div>}
+            {loading && (
+                <div style={styles.message}>
+                    Cargando productos...{' '}
+                    <span className="loading-animals">🐔 🐄 🐖 🐑 🐐</span>
+                </div>
+            )}
             {error && !loading && <div style={styles.message}>{error}</div>}
 
             {!loading && !error && (

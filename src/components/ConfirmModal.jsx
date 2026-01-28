@@ -24,7 +24,8 @@ function ConfirmModal({ isOpen, onClose, onConfirm, title, message }) {
             borderRadius: '16px',
             padding: '28px',
             maxWidth: '450px',
-            width: '90%',
+            width: '92vw',
+            boxSizing: 'border-box',
             boxShadow: '0 20px 60px rgba(0,0,0,0.3)',
             animation: 'slideUp 0.3s ease',
             border: '3px solid #ffdf29'

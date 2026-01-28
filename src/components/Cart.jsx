@@ -364,6 +364,33 @@ function Cart() {
 
     return (
         <div style={styles.container}>
+            <style>
+                {`
+                    @media (max-width: 480px) {
+                        .cart-item {
+                            grid-template-columns: 90px 1fr;
+                            padding: 14px;
+                        }
+
+                        .cart-item-actions {
+                            grid-column: 1 / -1;
+                            flex-direction: row;
+                            justify-content: space-between;
+                            align-items: center;
+                            gap: 8px;
+                        }
+
+                        .cart-item-subtotal {
+                            font-size: 18px;
+                            white-space: nowrap;
+                        }
+
+                        .cart-item-info h3 {
+                            font-size: 18px;
+                        }
+                    }
+                `}
+            </style>
             <div style={styles.header}>
                 <h1 style={styles.title}>🛒 Mi Carrito</h1>
                 <button
@@ -380,6 +407,7 @@ function Cart() {
                 {cart.map((item) => (
                     <div
                         key={item.id}
+                        className="cart-item"
                         style={hoverItem === item.id ? { ...styles.cartItem, ...styles.cartItemHover } : styles.cartItem}
                         onMouseEnter={() => setHoverItem(item.id)}
                         onMouseLeave={() => setHoverItem(null)}
@@ -390,7 +418,7 @@ function Cart() {
                             style={styles.itemImage}
                         />
 
-                        <div style={styles.itemInfo}>
+                        <div className="cart-item-info" style={styles.itemInfo}>
                             <div>
                                 <h3 style={styles.itemTitle}>{item.title}</h3>
                                 {item.category && (
@@ -402,7 +430,7 @@ function Cart() {
                             <p style={styles.itemPrice}>🪙 {item.price} c/u</p>
                         </div>
 
-                        <div style={styles.itemActions}>
+                        <div className="cart-item-actions" style={styles.itemActions}>
                             <div style={styles.quantityControl}>
                                 <button
                                     style={styles.quantityButton}
@@ -455,7 +483,7 @@ function Cart() {
                                 </div>
                             </div>
 
-                            <div style={styles.subtotal}>
+                            <div className="cart-item-subtotal" style={styles.subtotal}>
                                 🪙 {item.price * item.count}
                             </div>
 

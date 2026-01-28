@@ -256,7 +256,23 @@ function ItemDetailContainer() {
     if (loading) {
         return (
             <section style={styles.section}>
-                <div style={styles.message}>Cargando producto... 🐔 🐄 🐖 🐑 🐐</div>
+                <style>
+                    {`
+                        .loading-animals {
+                            white-space: nowrap;
+                        }
+
+                        @media (max-width: 360px) {
+                            .loading-animals {
+                                display: block;
+                            }
+                        }
+                    `}
+                </style>
+                <div style={styles.message}>
+                    Cargando producto...{' '}
+                    <span className="loading-animals">🐔 🐄 🐖 🐑 🐐</span>
+                </div>
             </section>
         )
     }
@@ -276,6 +292,19 @@ function ItemDetailContainer() {
 
     return (
         <section style={styles.section}>
+            <style>
+                {`
+                    .loading-animals {
+                        white-space: nowrap;
+                    }
+
+                    @media (max-width: 360px) {
+                        .loading-animals {
+                            display: block;
+                        }
+                    }
+                `}
+            </style>
             <h1 style={styles.heading}>Detalles del producto</h1>
             <div style={{
                 ...styles.card,

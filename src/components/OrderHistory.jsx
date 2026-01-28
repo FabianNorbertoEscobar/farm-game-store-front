@@ -216,7 +216,7 @@ function OrderHistory() {
         },
         itemRow: {
             display: 'grid',
-            gridTemplateColumns: '60px 1fr auto auto auto',
+            gridTemplateColumns: '60px 1fr auto',
             gap: '16px',
             alignItems: 'center',
             padding: '12px',
@@ -250,6 +250,11 @@ function OrderHistory() {
             borderRadius: '4px',
             display: 'inline-block',
             width: 'fit-content'
+        },
+        itemMeta: {
+            display: 'flex',
+            alignItems: 'center',
+            gap: '16px'
         },
         itemQuantity: {
             fontSize: '15px',
@@ -331,6 +336,31 @@ function OrderHistory() {
 
     return (
         <div style={styles.container}>
+            <style>
+                {`
+                    @media (max-width: 480px) {
+                        .order-item-row {
+                            grid-template-columns: 60px 1fr;
+                        }
+
+                        .order-item-meta {
+                            grid-column: 1 / -1;
+                            justify-content: space-between;
+                            flex-wrap: wrap;
+                            gap: 8px;
+                        }
+
+                        .order-item-price,
+                        .order-item-quantity {
+                            font-size: 14px;
+                        }
+
+                        .order-item-subtotal {
+                            font-size: 16px;
+                        }
+                    }
+                `}
+            </style>
             <Link to="/" style={styles.backLink}>
                 ← Volver a la tienda
             </Link>
@@ -395,7 +425,7 @@ function OrderHistory() {
                                     <div style={styles.orderDetails}>
                                         <div style={styles.itemsList}>
                                             {order.items.map((item, index) => (
-                                                <div key={index} style={styles.itemRow}>
+                                                <div key={index} className="order-item-row" style={styles.itemRow}>
                                                     <img
                                                         src={item.img}
                                                         alt={item.title}
@@ -407,19 +437,21 @@ function OrderHistory() {
                                                             {formatCategoryLabel(item.category)}
                                                         </span>
                                                     </div>
-                                                    <div style={styles.itemPrice}>
-                                                        🪙 {item.price}
-                                                        <div style={{ fontSize: '12px', color: '#999', marginTop: '2px' }}>
-                                                            c/u
+                                                    <div className="order-item-meta" style={styles.itemMeta}>
+                                                        <div className="order-item-price" style={styles.itemPrice}>
+                                                            🪙 {item.price}
+                                                            <div style={{ fontSize: '12px', color: '#999', marginTop: '2px' }}>
+                                                                c/u
+                                                            </div>
                                                         </div>
-                                                    </div>
-                                                    <div style={styles.itemQuantity}>
-                                                        x{item.quantity}
-                                                    </div>
-                                                    <div style={styles.itemSubtotal}>
-                                                        🪙 {item.price * item.quantity}
-                                                        <div style={{ fontSize: '12px', color: '#666', marginTop: '2px' }}>
-                                                            subtotal
+                                                        <div className="order-item-quantity" style={styles.itemQuantity}>
+                                                            x{item.quantity}
+                                                        </div>
+                                                        <div className="order-item-subtotal" style={styles.itemSubtotal}>
+                                                            🪙 {item.price * item.quantity}
+                                                            <div style={{ fontSize: '12px', color: '#666', marginTop: '2px' }}>
+                                                                subtotal
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
