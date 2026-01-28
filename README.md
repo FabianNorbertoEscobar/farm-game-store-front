@@ -4,7 +4,9 @@ Frontend de la tienda de la granja **Wonder Farm**, construido con React y Vite.
 
 **Logo del juego:**
 
-![Wonder Farm - Logo redondo](public/wonder_farm_redondo.png)
+<p align="center">
+	<img src="public/wonder_farm_redondo.png" alt="Wonder Farm - Logo redondo" width="160" />
+</p>
 
 **Home de la tienda:**
 
