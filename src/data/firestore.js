@@ -12,7 +12,6 @@ import {
     orderBy,
     Timestamp
 } from 'firebase/firestore';
-import products from "./products";
 
 // Configuración de Firebase
 const firebaseConfig = {
@@ -191,29 +190,6 @@ export async function getOrders(userId) {
     } catch (error) {
         console.error('Error fetching orders:', error);
         throw new Error('No se pudieron cargar las órdenes');
-    }
-}
-
-/**
- * Función utilitaria para exportar productos a Firestore (solo desarrollo)
- * @returns {Promise<void>}
- */
-export async function exportProductsToFirestore() {
-    try {
-        const importedProducts = products.map(item => {
-            const { ...productData } = item;
-            return productData;
-        });
-
-        for (const product of importedProducts) {
-            const docRef = await addDoc(collection(db, COLLECTIONS.PRODUCTS), product);
-            console.log("Producto creado:", docRef.id);
-        }
-
-        console.log(`${importedProducts.length} productos exportados exitosamente`);
-    } catch (error) {
-        console.error('Error exporting products:', error);
-        throw new Error('Error al exportar productos');
     }
 }
 
