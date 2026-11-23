@@ -21,7 +21,8 @@ Frontend de la tienda de la granja **Wonder Farm**, construido con React y Vite.
 - Integración con Firebase/Firestore para datos.
 
 ## Tecnologías
-- <img src="https://cdn.simpleicons.org/react/61DAFB" alt="React" width="24" height="24" /> React
+- <img src="https://cdn.simpleicons.org/react/61DAFB" alt="React" width="24" height="24" /> React 19 y React DOM
+- React Router 7 para navegación y rutas dinámicas.
 - <img src="https://cdn.simpleicons.org/vite/646CFF" alt="Vite" width="24" height="24" /> Vite
 - <img src="https://cdn.simpleicons.org/firebase/FFCA28" alt="Firebase" width="24" height="24" /> Firebase (Firestore)
 - <img src="https://cdn.simpleicons.org/javascript/F7DF1E" alt="JavaScript" width="24" height="24" /> JavaScript
@@ -29,6 +30,13 @@ Frontend de la tienda de la granja **Wonder Farm**, construido con React y Vite.
 - <img src="https://cdn.simpleicons.org/node.js/339933" alt="Node.js" width="24" height="24" /> Node.js
 - <img src="https://cdn.simpleicons.org/npm/CB3837" alt="npm" width="24" height="24" /> npm
 - <img src="https://cdn.simpleicons.org/vercel/000000" alt="Vercel" width="24" height="24" /> Vercel
+
+### Características de React utilizadas
+- Componentes funcionales con JSX, props y renderizado condicional para construir la interfaz.
+- Hooks: `useState` para el estado local, `useEffect` para efectos como la carga de productos, `useRef` para referencias y temporizadores, y `useMemo` para memorizar valores.
+- Context API (`createContext` y `useContext`) y hooks personalizados para compartir el carrito, el usuario y las notificaciones.
+- React Router con `BrowserRouter`, `Routes`, `Route` y hooks como `useParams` y `useNavigate` para la navegación entre páginas.
+- React DOM con `createRoot` y `StrictMode` para montar la aplicación.
 
 ## Requisitos
 - Node.js 18+ (recomendado)
